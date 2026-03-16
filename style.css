@@ -80,3 +80,22 @@ body {
   margin: 0 auto;
   width: 100%;
 }
+
+/* SECTION: Header */
+.app-header {
+  margin-bottom: var(--space-8);
+}
+
+.app-title {
+  font-size: 1.875rem; /* 30px */
+  letter-spacing: -0.02em;
+  margin: 0 0 var(--space-2);
+  color: var(--color-surface-strong);
+}
+
+.app-subtitle {
+  margin: 0;
+  font-size: var(--text-sm);
+  color: var(--color-muted);
+  max-width: 38rem;
+}
