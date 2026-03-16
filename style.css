@@ -197,3 +197,30 @@ body {
       1.6fr
     ) minmax(0, 1.6fr);
 }
+
+.key {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.55rem 0.4rem;
+  border-radius: 10px;
+  border: 1px solid rgba(15, 23, 42, 0.8);
+  background: radial-gradient(circle at 20% 0%, #1e293b, #020617);
+  color: #f9fafb;
+  font-size: var(--text-sm);
+  font-weight: 500;
+  cursor: pointer;
+  
+  /* eslint-disable css/use-baseline */
+  -webkit-user-select: none; 
+  user-select: none;
+  /* eslint-enable css/use-baseline */
+  
+  box-shadow: 0 3px 0 rgba(15, 23, 42, 0.9);
+  transition: transform var(--transition-fast),
+    box-shadow var(--transition-fast),
+    background-color var(--transition-fast),
+    border-color var(--transition-fast),
+    color var(--transition-fast);
+}
