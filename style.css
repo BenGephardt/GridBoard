@@ -29,4 +29,18 @@
   --text-lg: 1.125rem; /* 18px */
   --text-xl: 1.25rem; /* 20px */
 
+  --line-height-base: 1.5;
+
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  
+  --transition-fast: 150ms ease-out;
+  --transition-med: 200ms ease-out;
 }
