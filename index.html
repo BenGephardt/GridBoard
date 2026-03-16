@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Responsive Accessible Virtual Keyboard</title>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="app gradient-mesh">
+      <header class="app-header" aria-labelledby="app-title">
+        <div class="app-header__meta">
+          <h1 id="app-title" class="app-title">
+            Accessible Virtual Keyboard
+          </h1>
+          <p class="app-subtitle">
+            Type using a fully keyboard-navigable, WCAG-compliant on-screen QWERTY
+            layout.
+          </p>
+        </div>
+      </header>
+      <main class="app-main" aria-label="Virtual keyboard typing area">
+      
+      </main>
+      <footer class="app-footer" aria-label="Application meta information">
+        <p class="app-footer__text">
+          Fully navigable via keyboard. Use Tab and Shift+Tab to move between
+          keys; press Enter or Space to activate.
+        </p>
+      </footer>
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>
