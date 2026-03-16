@@ -1,0 +1,28 @@
+{
+  "name": "gridboard",
+  "version": "1.0.0",
+  "description": "A fully responsive, accessible virtual keyboard built from scratch using CSS Grid and vanilla JavaScript.",
+  "main": "script.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BenGephardt/GridBoard.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/BenGephardt/GridBoard/issues"
+  },
+  "homepage": "https://github.com/BenGephardt/GridBoard#readme",
+  "devDependencies": {
+    "@eslint/css": "^1.0.0",
+    "@eslint/js": "^10.0.1",
+    "@eslint/json": "^1.1.0",
+    "eslint": "^10.0.3",
+    "globals": "^17.4.0"
+  }
+}
