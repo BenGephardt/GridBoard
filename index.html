@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -14,30 +14,157 @@
     <div class="app gradient-mesh">
       <header class="app-header" aria-labelledby="app-title">
         <div class="app-header__meta">
-          <h1 id="app-title" class="app-title">
-            Accessible Virtual Keyboard
-          </h1>
+          <h1 id="app-title" class="app-title">Accessible Virtual Keyboard</h1>
           <p class="app-subtitle">
-            Type using a fully keyboard-navigable, WCAG-compliant on-screen QWERTY
-            layout.
+            Type using a fully keyboard-navigable, WCAG-compliant on-screen
+            QWERTY layout.
           </p>
         </div>
       </header>
       <main class="app-main" aria-label="Virtual keyboard typing area">
-	        <!-- SECTION: Display Area -->
-	        <section class="display-section">
-	          <div class="display-card shadow-soft">
-	            <label class="display-label" for="virtual-textarea">
-	              Output text
-	            </label>
-	            <textarea
-	              id="virtual-textarea"
-	              class="display-textarea"
-	              aria-label="Text output from the virtual keyboard"
-	              rows="5"
-	            ></textarea>
-	          </div>
+        <!-- SECTION: Display Area -->
+        <section class="display-section">
+          <div class="display-card shadow-soft">
+            <label class="display-label" for="virtual-textarea">
+              Output text
+            </label>
+            <textarea
+              id="virtual-textarea"
+              class="display-textarea"
+              aria-label="Text output from the virtual keyboard"
+              rows="5"
+            ></textarea>
+          </div>
         </section>
+        	<!-- SECTION: Keyboard -->
+	        <section
+	          class="keyboard-section"
+	          aria-label="Virtual QWERTY keyboard"
+	        >
+	          <div
+	            class="keyboard shadow-soft"
+	            role="group"
+	            aria-label="On-screen keyboard"
+	          >
+	            <!-- Row 1 -->
+	            <div class="keyboard-row keyboard-row--1">
+	              <button type="button" class="key key--utility" data-key="esc">
+	                Esc
+	              </button>
+	              <button type="button" class="key" data-key="1">1</button>
+	              <!-- ... other keys placeholder... -->
+	              <button
+	                type="button"
+	                class="key key--special key--backspace"
+	                data-key="backspace"
+	                aria-label="Backspace"
+	              >
+	                Backspace
+	              </button>
+	            </div>
+	
+	            <!-- Row 2 -->
+	            <div class="keyboard-row keyboard-row--2">
+	              <button
+	                type="button"
+	                class="key key--special key--tab"
+	                data-key="tab"
+	                aria-label="Tab"
+	              >
+	                Tab
+	              </button>
+	              <button type="button" class="key" data-key="q">Q</button>
+	              <!-- ... other keys placeholder ... -->
+	              <button type="button" class="key" data-key="\\"></button>
+	            </div>
+	
+	            <!-- Row 3 -->
+	            <div class="keyboard-row keyboard-row--3">
+	              <button
+	                type="button"
+	                class="key key--special key--caps"
+	                data-key="caps"
+	                aria-pressed="false"
+	                aria-label="Caps Lock"
+	              >
+	                Caps
+	                <span class="key-indicator" aria-hidden="true"></span>
+	              </button>
+	              <button type="button" class="key" data-key="a">A</button>
+	              <!-- ... other keys placeholder... -->
+	              <button
+	                type="button"
+	                class="key key--special key--enter"
+	                data-key="enter"
+	                aria-label="Enter"
+	              >
+	                Enter
+	              </button>
+	            </div>
+	
+	            <!-- Row 4 -->
+	            <div class="keyboard-row keyboard-row--4">
+	              <button
+	                type="button"
+	                class="key key--special key--shift"
+	                data-key="shift-left"
+	                aria-label="Left Shift"
+	              >
+	                Shift
+	              </button>
+	              <button type="button" class="key" data-key="z">Z</button>
+	              <!-- ... other keys placeholder... -->
+	              <button
+	                type="button"
+	                class="key key--special key--shift"
+	                data-key="shift-right"
+	                aria-label="Right Shift"
+	              >
+	                Shift
+	              </button>
+	            </div>
+	
+	            <!-- Row 5 -->
+	            <div class="keyboard-row keyboard-row--5">
+	              <button
+	                type="button"
+	                class="key key--special key--control"
+	                data-key="ctrl"
+	              >
+	                Ctrl
+	              </button>
+	              <button
+	                type="button"
+	                class="key key--special key--utility"
+	                data-key="alt"
+	              >
+	                Alt
+	              </button>
+	              <button
+	                type="button"
+	                class="key key--special key--space"
+	                data-key="space"
+	                aria-label="Spacebar"
+	              >
+	                Space
+	              </button>
+	              <button
+	                type="button"
+	                class="key key--special key--utility"
+	                data-key="altgr"
+	              >
+	                Alt
+	              </button>
+	              <button
+	                type="button"
+	                class="key key--special key--control"
+	                data-key="cmd"
+	              >
+	                Cmd
+	              </button>
+	            </div>
+	          </div>
+	        </section>
       </main>
       <footer class="app-footer" aria-label="Application meta information">
         <p class="app-footer__text">
