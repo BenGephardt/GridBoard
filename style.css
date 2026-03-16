@@ -44,3 +44,25 @@
   --transition-fast: 150ms ease-out;
   --transition-med: 200ms ease-out;
 }
+
+/* SECTION: Global Reset & Layout */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: var(--font-family-base);
+  font-size: var(--text-base);
+  line-height: var(--line-height-base);
+  color: var(--color-text);
+  background-color: var(--color-bg);
+}
+
