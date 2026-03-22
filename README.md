@@ -5,7 +5,7 @@
 
 # GridBoard ◆ A High-Contrast Accessible Virtual Keyboard
 
-🚀 **View the Live Application**
+🚀 [View the Live Application](https://BenGephardt.github.io/GridBoard/)
 *A high-performance, precision-engineered virtual typing interface built with modern CSS Geometry and Vanilla JavaScript.*
 
 ---
