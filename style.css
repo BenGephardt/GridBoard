@@ -1,17 +1,17 @@
-/* SECTION: Design Tokens */
+/* --- 1. DESIGN TOKENS --- */
 :root {
-  --color-bg: #f8fafc;
-  --color-surface: #e2e8f0;
-  --color-surface-soft: #edf2ff;
-  --color-surface-strong: #0f172a;
-  --color-border: #94a3b8;
+  --color-bg: #f8fafc; /* off-white */
+  --color-surface: #e2e8f0; /* slate-200 */
+  --color-surface-soft: #edf2ff; /* indigo-50 */
+  --color-surface-strong: #0f172a; /* slate-900 for keys */
+  --color-border: #94a3b8; /* slate-400 */
 
-  --color-text: #0f172a;
-  --color-muted: #475569;
-  --color-accent: #0ea5e9;
-  --color-accent-strong: #0284c7;
-  --color-accent-soft: #e0f2fe;
-  --color-danger: #ef4444;
+  --color-text: #0f172a; /* slate-900 */
+  --color-muted: #475569; /* slate-600 */
+  --color-accent: #0ea5e9; /* sky-500 */
+  --color-accent-strong: #0284c7; /* sky-600 */
+  --color-accent-soft: #e0f2fe; /* sky-100 */
+  --color-danger: #ef4444; /* red-500 */
 
   --shadow-soft:
     0 1px 2px rgba(15, 23, 42, 0.08), 0 8px 16px rgba(15, 23, 42, 0.08);
@@ -24,11 +24,11 @@
     "Space Grotesk", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
     sans-serif;
 
-  --text-xs: 0.75rem; /* 12px */
-  --text-sm: 0.875rem; /* 14px */
-  --text-base: 1rem; /* 16px */
-  --text-lg: 1.125rem; /* 18px */
-  --text-xl: 1.25rem; /* 20px */
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.25rem;
 
   --line-height-base: 1.5;
 
@@ -46,7 +46,7 @@
   --transition-med: 200ms ease-out;
 }
 
-/* SECTION: Global Reset & Layout */
+/* --- 2. GLOBAL RESET & LAYOUT --- */
 *,
 *::before,
 *::after {
@@ -54,7 +54,7 @@
 }
 
 html {
-  font-size: 16px;
+  font-size: 16px; /* Accessibility base size */
 }
 
 body {
@@ -82,13 +82,13 @@ body {
   width: 100%;
 }
 
-/* SECTION: Header */
+/* --- 3. HEADER --- */
 .app-header {
   margin-bottom: var(--space-8);
 }
 
 .app-title {
-  font-size: 1.875rem; /* 30px */
+  font-size: 1.875rem;
   letter-spacing: -0.02em;
   margin: 0 0 var(--space-2);
   color: var(--color-surface-strong);
@@ -101,7 +101,7 @@ body {
   max-width: 38rem;
 }
 
-/* SECTION: Display Area */
+/* --- 4. DISPLAY AREA --- */
 .display-section {
   margin-bottom: var(--space-8);
 }
@@ -125,7 +125,9 @@ body {
 
 .display-textarea {
   width: 100%;
-  overflow-y: hidden;
+  /* eslint-disable-next-line css/use-baseline */
+  resize: none;
+  overflow: hidden;
   min-height: 120px;
   padding: var(--space-4);
   border-radius: var(--radius-md);
@@ -143,7 +145,13 @@ body {
     background-color var(--transition-fast);
 }
 
-/* SECTION: Keyboard Layout */
+.display-textarea:focus-visible {
+  border-color: var(--color-accent-strong);
+  box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.35);
+  background-color: #ffffff;
+}
+
+/* --- 5. KEYBOARD LAYOUT --- */
 .keyboard-section {
   margin-bottom: var(--space-8);
 }
@@ -165,7 +173,7 @@ body {
   gap: var(--space-2);
 }
 
-/* Row-specific layouts */
+/* Row-specific layouts for realistic proportions */
 .keyboard-row--1 {
   grid-template-columns: minmax(0, 1.2fr) repeat(12, minmax(0, 1fr)) minmax(
       0,
@@ -192,12 +200,12 @@ body {
 }
 
 .keyboard-row--5 {
-  grid-template-columns: minmax(0, 1.6fr) minmax(0, 1.6fr) minmax(0, 6fr) minmax(
-      0,
-      1.6fr
-    ) minmax(0, 1.6fr);
+  grid-template-columns:
+    minmax(0, 1.6fr) minmax(0, 1.6fr) minmax(0, 6fr) minmax(0, 1.6fr)
+    minmax(0, 1.6fr);
 }
 
+/* --- 6. KEY STYLES --- */
 .key {
   position: relative;
   display: inline-flex;
@@ -211,16 +219,210 @@ body {
   font-size: var(--text-sm);
   font-weight: 500;
   cursor: pointer;
-  
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
   /* eslint-disable css/use-baseline */
-  -webkit-user-select: none; 
+  -webkit-user-select: none;
   user-select: none;
-  /* eslint-enable css/use-baseline */
-  
   box-shadow: 0 3px 0 rgba(15, 23, 42, 0.9);
-  transition: transform var(--transition-fast),
+  transition:
+    transform var(--transition-fast),
     box-shadow var(--transition-fast),
     background-color var(--transition-fast),
     border-color var(--transition-fast),
     color var(--transition-fast);
+}
+
+.key--special {
+  background: radial-gradient(circle at 10% 0%, #0f172a, #020617);
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.key--utility {
+  color: #e5e7eb;
+}
+
+.key--control {
+  color: #e5e7eb;
+}
+
+.key--space {
+  grid-column: 3 / span 1;
+  padding-inline: 3rem;
+  justify-content: center;
+}
+
+/* Caps, Enter, Backspace shape emphasis */
+.key--backspace,
+.key--enter {
+  font-size: var(--text-xs);
+}
+
+.key--caps,
+.key--enter,
+.key--shift,
+.key--space {
+  background: radial-gradient(circle at 20% 0%, #0b1120, #020617);
+}
+
+/* Pressed / active state */
+.key:active,
+.key.is-active {
+  transform: translateY(2px);
+  box-shadow: 0 1px 0 rgba(15, 23, 42, 0.9);
+  background: radial-gradient(circle at 20% 0%, #1d4ed8, #020617);
+  border-color: #1d4ed8;
+}
+
+/* Hover focus states with accessible outlines */
+.key:hover {
+  border-color: var(--color-accent);
+}
+
+.key:focus-visible {
+  outline: none;
+  box-shadow:
+    0 0 0 3px rgba(14, 165, 233, 0.5),
+    0 3px 0 rgba(15, 23, 42, 0.9);
+}
+
+/* Caps lock indicator */
+.key--caps {
+  justify-content: space-between;
+  padding-inline: var(--space-3);
+}
+
+.key-indicator {
+  width: 9px;
+  height: 9px;
+  border-radius: 999px;
+  border: 1px solid #e5e7eb;
+  background-color: transparent;
+  box-shadow: inset 0 0 0 1px rgba(15, 23, 42, 0.6);
+  transition:
+    background-color var(--transition-med),
+    box-shadow var(--transition-med);
+}
+
+.key--caps[aria-pressed="true"] .key-indicator {
+  background-color: #22c55e;
+  box-shadow: 0 0 12px rgba(34, 197, 94, 0.8);
+}
+
+.key--caps[aria-pressed="true"] {
+  border-color: #22c55e;
+  background: radial-gradient(circle at 20% 0%, #16a34a, #022c22);
+}
+
+/* --- 7. FOOTER --- */
+.app-footer {
+  margin-top: auto;
+  padding-top: var(--space-6);
+}
+
+.app-footer__text {
+  font-size: var(--text-xs);
+  color: var(--color-muted);
+  text-align: right;
+}
+
+/* --- 8. UTILITY ATMOSPHERE --- */
+.gradient-mesh {
+  position: relative;
+  isolation: isolate;
+  background:
+    radial-gradient(at 40% 20%, rgba(248, 250, 252, 0.9) 0px, transparent 50%),
+    radial-gradient(at 90% 10%, rgba(125, 211, 252, 0.6) 0px, transparent 55%),
+    radial-gradient(at 0% 100%, rgba(199, 210, 254, 0.6) 0px, transparent 55%),
+    radial-gradient(at 100% 100%, rgba(52, 211, 153, 0.4) 0px, transparent 55%);
+}
+
+/* --- 9. RESPONSIVE --- */
+@media (max-width: 768px) {
+  .app {
+    padding: var(--space-6) var(--space-3);
+  }
+
+  .keyboard {
+    padding: var(--space-4);
+  }
+
+  .keyboard-row {
+    gap: var(--space-1);
+  }
+
+  .key {
+    padding: 0.5rem 0.2rem;
+    border-radius: 8px;
+    font-size: 0.8rem;
+    /* Added to ensure icons don't wrap or look weird */
+    white-space: nowrap;
+    overflow: hidden;
+  }
+
+  .keyboard-row--1,
+  .keyboard-row--2,
+  .keyboard-row--3,
+  .keyboard-row--4,
+  .keyboard-row--5 {
+    grid-template-columns: repeat(auto-fit, minmax(28px, 1fr));
+  }
+
+  .key--space {
+    grid-column: span 6;
+  }
+
+  /* --- UPDATED SPECIAL KEY LOGIC --- */
+  .key--special {
+    font-size: 0; /* Hides the text: "Backspace", "Shift", etc. */
+    letter-spacing: 0;
+    padding-inline: var(--space-1);
+  }
+
+  /* --- ADDED ICON PSEUDO-ELEMENTS --- */
+  .key--backspace::before {
+    content: "⌫";
+    font-size: 1.1rem;
+  }
+  .key--enter::before {
+    content: "↵";
+    font-size: 1.2rem;
+  }
+  .key--shift::before {
+    content: "⇧";
+    font-size: 1.2rem;
+  }
+  .key--tab::before {
+    content: "⇥";
+    font-size: 1.2rem;
+  }
+  .key--caps::before {
+    content: "⇪";
+    font-size: 1.2rem;
+  }
+
+  /* Ensure the caps indicator dot still shows up next to the icon */
+  .key--caps {
+    display: flex;
+    gap: var(--space-1);
+    justify-content: center;
+  }
+}
+
+@media (min-width: 1024px) {
+  .app {
+    padding-top: var(--space-10);
+  }
+
+  .keyboard {
+    padding: var(--space-6);
+  }
+
+  .key {
+    padding: 0.65rem 0.5rem;
+  }
 }
