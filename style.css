@@ -355,8 +355,10 @@ body {
     gap: var(--space-1);
   }
 
+  /* WCAG 2.5.8: 44px min-height keeps keys tappable for limited motor input */
   .key {
     padding: 0.5rem 0.2rem;
+    min-height: 44px;
     border-radius: 8px;
     font-size: 0.8rem;
     /* Added to ensure icons don't wrap or look weird */
@@ -364,12 +366,14 @@ body {
     overflow: hidden;
   }
 
+  /* 32px floor forces rows to wrap rather than compress keys below the
+     minimum touch target — tappability over authentic keyboard proportions */
   .keyboard-row--1,
   .keyboard-row--2,
   .keyboard-row--3,
   .keyboard-row--4,
   .keyboard-row--5 {
-    grid-template-columns: repeat(auto-fit, minmax(28px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(32px, 1fr));
   }
 
   .key--space {
@@ -377,6 +381,7 @@ body {
   }
 
   /* --- UPDATED SPECIAL KEY LOGIC --- */
+  /* Accessible names are preserved via aria-label on each key */
   .key--special {
     font-size: 0; /* Hides the text: "Backspace", "Shift", etc. */
     letter-spacing: 0;
@@ -403,6 +408,15 @@ body {
   .key--caps::before {
     content: "⇪";
     font-size: 1.2rem;
+  }
+
+  /* Modifier keys have no glyph equivalent — fall back to the data-key value
+     so they don't render blank under font-size: 0 */
+  .key--control::before,
+  .key--utility::before {
+    content: attr(data-key);
+    font-size: 0.7rem;
+    text-transform: uppercase;
   }
 
   /* Ensure the caps indicator dot still shows up next to the icon */
