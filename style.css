@@ -356,8 +356,12 @@ body {
   }
 
   /* WCAG 2.5.8: 44px min-height keeps keys tappable for limited motor input */
+  /* WCAG 2.5.8: 44px min-height keeps keys tappable for limited motor input.
+     min-width holds the floor against flex-shrink. */
   .key {
     padding: 0.5rem 0.2rem;
+    flex: 1 1 32px;
+    min-width: 32px;
     min-height: 44px;
     border-radius: 8px;
     font-size: 0.8rem;
@@ -366,18 +370,22 @@ body {
     overflow: hidden;
   }
 
-  /* 32px floor forces rows to wrap rather than compress keys below the
-     minimum touch target — tappability over authentic keyboard proportions */
+  /* Flex-wrap actually wraps overflow items onto the next line; auto-fit grid
+     squeezes them into the same row instead. Tappability over authentic
+     keyboard proportions. */
   .keyboard-row--1,
   .keyboard-row--2,
   .keyboard-row--3,
   .keyboard-row--4,
   .keyboard-row--5 {
-    grid-template-columns: repeat(auto-fit, minmax(32px, 1fr));
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-1);
+    grid-template-columns: none;
   }
 
   .key--space {
-    grid-column: span 6;
+    flex: 6 1 120px;
   }
 
   /* --- UPDATED SPECIAL KEY LOGIC --- */
@@ -407,6 +415,10 @@ body {
   }
   .key--caps::before {
     content: "⇪";
+    font-size: 1.2rem;
+  }
+  .key--space::before {
+    content: "␣";
     font-size: 1.2rem;
   }
 
