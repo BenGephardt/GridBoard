@@ -125,10 +125,12 @@ if (keyboard) {
 }
 
 // --- OPTIONAL PHYSICAL KEYBOARD SYNC ---
-function findVirtualKeyElement(eventKey) {
+function findVirtualKeyElement(event) {
   if (!keyboard) return null;
 
-  const key = eventKey.toLowerCase();
+  const key = event.key.toLowerCase();
+  // event.location distinguishes paired modifiers: 1 = left, 2 = right
+  const isRight = event.location === 2;
 
   switch (key) {
     case " ":
@@ -141,12 +143,18 @@ function findVirtualKeyElement(eventKey) {
       return keyboard.querySelector(".key[data-key='tab']");
     case "capslock":
       return keyboard.querySelector(".key[data-key='caps']");
+    case "escape":
+      return keyboard.querySelector(".key[data-key='esc']");
     case "shift":
-      return keyboard.querySelector(".key[data-key='shift-left']");
+      return keyboard.querySelector(
+        `.key[data-key='${isRight ? "shift-right" : "shift-left"}']`
+      );
+    case "alt":
+      return keyboard.querySelector(
+        `.key[data-key='${isRight ? "altgr" : "alt"}']`
+      );
     case "control":
       return keyboard.querySelector(".key[data-key='ctrl']");
-    case "alt":
-      return keyboard.querySelector(".key[data-key='alt']");
     case "meta":
       return keyboard.querySelector(".key[data-key='cmd']");
     default: {
@@ -172,7 +180,7 @@ window.addEventListener("keydown", (event) => {
 
   if (key === "Tab") return;
 
-  const virtualKey = findVirtualKeyElement(key);
+  const virtualKey = findVirtualKeyElement(event);
   if (!virtualKey) return;
 
   if (
