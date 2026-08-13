@@ -183,6 +183,13 @@ window.addEventListener("keydown", (event) => {
   const virtualKey = findVirtualKeyElement(event);
   if (!virtualKey) return;
 
+  // Early return skips handleVirtualKey's textarea.focus(), which would
+  // otherwise break Shift+Tab navigation through the keys.
+  if (key === "Shift" || key === "Control" || key === "Alt" || key === "Meta") {
+    flashVirtualKey(virtualKey);
+    return;
+  }
+
   if (
     key === "Backspace" ||
     key === "Enter" ||
