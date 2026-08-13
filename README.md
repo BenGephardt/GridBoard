@@ -35,6 +35,8 @@ The interface uses an "Ocean Slate" design system: deep slate keys against an of
 - **Keyboard Navigation:** Full Tab and Shift+Tab traversal with visible focus indicators. Modifier keypresses don't steal focus, so backward navigation works.
 - **Verified:** 100/100 Lighthouse accessibility; axe DevTools reports zero issues with Best Practices enabled.
 
+> **Note:** automated scores aren't the whole picture. See [Known Limitations](#-known-limitations) for what's still incomplete — including the fact that Shift isn't implemented yet.
+
 ### 🎨 Design System ("Ocean Slate")
 
 - **Proportional Desktop Layout:** `grid-template-columns` with fractional units replicates the staggered proportions of a physical keyboard (a 2.4fr Backspace against 1fr alphanumeric keys).
@@ -89,8 +91,6 @@ Documented honestly rather than quietly:
 - **Modifier keys are non-functional.** Esc, Ctrl, Alt, and Cmd render but take no action. Under review: implement what makes sense in a textarea context, or remove them, since a decorative key is worse than no key.
 - **Caps Lock doesn't update the visible labels.** State toggles correctly and letters insert uppercase, but the keys always display uppercase. Only the indicator dot reflects state.
 - **Not yet tested with a real screen reader.** Automated tooling only covers a subset. NVDA and VoiceOver testing is next.
-
-See [`TODO.md`](./TODO.md) for the full backlog.
 
 ---
 
