@@ -1,83 +1,124 @@
 ![HTML5](https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white)
 ![CSS3](https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white)
 ![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E)
+![Lighthouse Accessibility 100](https://img.shields.io/badge/lighthouse_a11y-100-brightgreen?style=for-the-badge&logo=lighthouse&logoColor=white)
 
-
-# GridBoard ◆ A High-Contrast Accessible Virtual Keyboard
+# GridBoard ◆ An Accessible On-Screen Keyboard
 
 🚀 [View the Live Application](https://BenGephardt.github.io/GridBoard/)
-*A high-performance, precision-engineered virtual typing interface built with modern CSS Geometry and Vanilla JavaScript.*
+
+_A dependency-free virtual QWERTY keyboard built for users with limited motor input._
 
 ---
 
 ## 📜 Project Description
 
-**GridBoard** is a sophisticated, browser-based virtual QWERTY keyboard designed for maximum accessibility and visual clarity. Unlike standard input overlays, GridBoard leverages a "Ocean Slate" design system—combining deep slate tones with vibrant sky-blue accents to provide a high-contrast environment that reduces eye strain and improves key recognition.
+**GridBoard** is a browser-based on-screen keyboard built with vanilla JavaScript and CSS — no frameworks, no build step, no dependencies. It's designed for people who type using a pointer, switch, or touch rather than a physical keyboard.
 
-Built for users who require on-screen typing assistance or developers looking for a WCAG-compliant keyboard implementation, GridBoard features a realistic mechanical layout. It supports full physical keyboard synchronization, haptic-style visual feedback, and a dynamic "infinite-growth" output display that ensures your text never hits a boundary.
+The interface uses an "Ocean Slate" design system: deep slate keys against an off-white surface for high contrast and clear key recognition. It supports physical keyboard synchronization, visual press feedback, and an output area that grows as you type.
 
 ---
 
 ## ⚙️ Key Features & Architecture
 
-### ⚡ Performance & Input Logic
+### ⚡ Input Logic
 
-* **Caret-Aware Insertion:** Implements a custom `insertAtCaret` algorithm that handles text injection at any point in a string, allowing users to move the cursor and edit middle-sentence without losing position.
-* **Event Delegation Strategy:** Rather than attaching hundreds of listeners to individual keys, the app uses a single optimized listener on the keyboard container to manage all input, significantly reducing memory overhead.
-* **Physical-to-Virtual Sync:** Features a bi-directional state bridge. When you type on a physical keyboard, the corresponding virtual keys "flash" using CSS hardware-accelerated transforms to maintain a unified mental model.
-* **Zero-Jitter Auto-Resize:** Utilizes a `scrollHeight` calculation strategy for the output area, allowing the textarea to expand vertically as you type while maintaining a perfect 0ms Total Blocking Time (TBT).
+- **Caret-Aware Insertion:** A custom `insertAtCaret` function handles text injection at any cursor position, so users can move the caret and edit mid-sentence without losing their place.
+- **Event Delegation:** A single listener on the keyboard container handles all key input rather than attaching listeners to every button, keeping the DOM footprint light.
+- **Physical-to-Virtual Sync:** Typing on a physical keyboard flashes the corresponding virtual key. Uses `event.location` to distinguish left from right modifiers, since `event.key` reports both Shift keys identically.
+- **Auto-Growing Output:** The textarea expands vertically as you type, using a `scrollHeight` recalculation on each input event.
+
+### ♿ Accessibility
+
+- **Touch Targets (WCAG 2.5.8):** Keys hold a 44px minimum height on mobile. Rows wrap rather than compress when space runs out — tappability over authentic keyboard proportions.
+- **Screen Reader Support:** Semantic `<button>` elements throughout, `aria-pressed` on Caps Lock, and `aria-label` on keys whose visible text is hidden at mobile widths. Character keys deliberately have **no** `aria-label`, so the accessible name follows the visible text.
+- **Keyboard Navigation:** Full Tab and Shift+Tab traversal with visible focus indicators. Modifier keypresses don't steal focus, so backward navigation works.
+- **Verified:** 100/100 Lighthouse accessibility; axe DevTools reports zero issues with Best Practices enabled.
 
 ### 🎨 Design System ("Ocean Slate")
 
-* **WCAG 2.1 AA Compliance:** High-contrast ratios (Slate-900 on Off-White), full keyboard tab-navigation support, and ARIA-pressed states for toggles like Caps Lock.
-* **Mathematical Grid Geometry:** The keyboard layout utilizes complex `grid-template-columns` with fractional units (`fr`) to replicate the staggered, proportional look of a physical keyboard (e.g., a 2.4fr Backspace vs a 1fr alphanumeric key).
-* **Adaptive Iconography:** Implements a CSS-driven "Icon Fallback" system. On mobile devices, long text labels like "Backspace" and "Enter" are automatically swapped for clean geometric symbols (`⌫`, `↵`) using `font-size: 0` and pseudo-element injection to prevent layout blowout.
-* **Design Token Architecture:** Built on a centralized CSS Variable system (`--color-accent`, `--space-4`, etc.), making the entire interface instantly themeable and scalable.
+- **Proportional Desktop Layout:** `grid-template-columns` with fractional units replicates the staggered proportions of a physical keyboard (a 2.4fr Backspace against 1fr alphanumeric keys).
+- **Flex-Wrap Mobile Layout:** Below 768px, rows switch to `flex-wrap` so keys hold their minimum touch target and spill to the next line instead of squeezing.
+- **Adaptive Iconography:** On mobile, long labels like "Backspace" and "Enter" swap for geometric symbols (`⌫`, `↵`) via `font-size: 0` and pseudo-element injection. Accessible names are preserved through `aria-label`.
+- **Design Token Architecture:** Centralized CSS custom properties (`--color-accent`, `--space-4`) make the interface themeable and scalable.
 
 ---
 
 ## 👁️ The Developer's Perspective
 
-### 🔮 Deep Dive: Solving Architectural Challenges
+### 🔮 Deep Dive: What the Audit Found
 
-#### 1. The Conflict of Manual vs. Auto Resizing
-A common issue with textareas is the browser's native `resize` handle, which often conflicts with programmatic height adjustments. To solve this, I implemented an **Auto-Grow Engine** in JavaScript and utilized `resize: none` with an `eslint-disable` override for the `css/use-baseline` rule. This ensures the UI remains consistent across browsers while providing an "infinite" canvas for the user.
+#### 1. Automated tooling scored clean while the keyboard was broken
 
-#### 2. Preventing Accidental Selection
-During rapid typing, browsers often trigger a "text selection" highlight on buttons, which breaks the immersion of a virtual keyboard. I bypassed the limitations of non-standard CSS by hijacking the `mousedown` and `selectstart` events via JavaScript delegation, effectively preventing visual "ghosting" while maintaining full click functionality.
+axe DevTools reported zero issues and Lighthouse's accessibility score was 100 — while four real accessibility failures existed:
 
-#### 3. Proportional Mobile Scaling
-Keyboards are notoriously difficult to make responsive. GridBoard solves this by switching the `grid-template-columns` from specific proportional fractions to an `auto-fit` model on mobile. This, combined with a 0.65rem font-scaling strategy for special keys, ensures the keyboard remains usable even on narrow devices like an iPhone SE.
+- **Shift was entirely unimplemented.** A user who couldn't reach a physical keyboard couldn't type a question mark, an apostrophe, or any shifted character.
+- **Modifier keys (Esc, Ctrl, Alt, Cmd) rendered but did nothing.**
+- **Only left Shift responded** to physical input, because `event.key` returns `"Shift"` for both.
+- **Shift+Tab navigation was broken** by an unconditional `textarea.focus()` that stole focus on every keypress.
+
+None of these are catchable by a scanner. All of them stop a real user cold. Scanners check compliance; only using the thing checks whether it works.
+
+#### 2. Touch targets: the one thing automation did catch
+
+Lighthouse flagged keys compressing below the WCAG 2.5.8 minimum of 24×24px on mobile — the criterion that matters most for this project's users.
+
+My first fix was wrong. I tried `grid-template-columns: repeat(auto-fit, minmax(32px, 1fr))`, assuming rows would wrap at the floor. They don't: `auto-fit` fits as many tracks as it can and then places the overflow items **in the same row**, compressing them. Rows were running off the right edge rather than wrapping.
+
+The working fix was `display: flex; flex-wrap: wrap` with `min-width: 32px; min-height: 44px` on the keys. Flex genuinely wraps, and `min-width` holds the floor against flex-shrink.
+
+#### 3. The ARIA labels I removed
+
+I initially added `aria-label` to every key, including `aria-label="Minus"` on `-` and `aria-label="1"` on `1`. Then I took them off.
+
+`aria-label` overrides the visible text. Hardcoding "Minus" strips the user's own screen-reader punctuation verbosity settings, and it breaks voice control — someone saying "click minus" no longer matches the accessible name. That's WCAG 2.5.3 Label in Name.
+
+Labels now exist only where the visible text is genuinely hidden (special keys under `font-size: 0`) or ambiguous (Left vs. Right Shift, Alt vs. Alt Graph).
+
+#### 4. Why Shift+Tab wasn't remapped
+
+Shift+Tab is a two-key chord, which is exactly what's hard for this project's users — so a single-key alternative was tempting. I left it alone. Shift+Tab is platform-defined behavior every assistive-technology user relies on, and inventing a shortcut would make this page work differently from every other page they use. The right accommodation is OS-level Sticky Keys, which only keeps working if the standard isn't broken.
+
+---
+
+## 🚧 Known Limitations
+
+Documented honestly rather than quietly:
+
+- **Shift is not yet implemented.** Shifted characters (`! @ # $ % ^ & * ( ) _ + { } | : " < > ?`) can't be typed from the virtual keyboard. Planned as a **sticky** modifier — tap Shift, next key is shifted, auto-release — because holding two keys at once defeats the purpose for this project's users.
+- **Modifier keys are non-functional.** Esc, Ctrl, Alt, and Cmd render but take no action. Under review: implement what makes sense in a textarea context, or remove them, since a decorative key is worse than no key.
+- **Caps Lock doesn't update the visible labels.** State toggles correctly and letters insert uppercase, but the keys always display uppercase. Only the indicator dot reflects state.
+- **Not yet tested with a real screen reader.** Automated tooling only covers a subset. NVDA and VoiceOver testing is next.
+
+See [`TODO.md`](./TODO.md) for the full backlog.
 
 ---
 
 ## 📦 Tech Stack
 
-* **Vanilla JavaScript (ES6+):** Clean, dependency-free logic utilizing DOM API and Event Delegation.
-* **CSS3 Advanced Features:** Custom Properties (Tokens), CSS Grid, Flexbox, and `calc()` for geometric precision.
-* **HTML5 Semantic Markup:** Leveraging `<main>`, `<header>`, and `<button>` for a screen-reader friendly experience.
-* **Google Fonts:** Utilizing *Space Grotesk* for its modern, highly-legible geometric apertures.
+- **Vanilla JavaScript (ES6+):** Dependency-free logic using the DOM API and event delegation.
+- **CSS3:** Custom properties, Grid (desktop), Flexbox (mobile), and media queries.
+- **HTML5 Semantic Markup:** `<main>`, `<header>`, `<section>`, and native `<button>` elements for screen-reader support.
+- **Google Fonts:** *Space Grotesk*, chosen for its open apertures and legibility at small sizes.
 
 ---
 
 ## 🗝️ Installation & Setup
 
-### Local Setup
+1. **Clone the Repository:**
+   ```bash
+   git clone https://github.com/BenGephardt/GridBoard.git
+   cd GridBoard
+   ```
 
-1.  **Clone the Repository:**
-    ```bash
-    git clone https://github.com/YourUsername/gridboard.git
-    cd gridboard
-    ```
+2. **Run it:**
+   No build step. Open `index.html` directly, or use the Live Server extension in VS Code for auto-reload.
 
-2.  **Run with Live Server:**
-    Since this is a Vanilla JS project, you can simply open `index.html` in your browser or use the "Live Server" extension in VS Code.
-
-3.  **Code Quality:**
-    This project uses Prettier for formatting. To format the code, run:
-    ```bash
-    npx prettier . --write
-    ```
+3. **Code Quality:**
+   This project uses Prettier for formatting:
+   ```bash
+   npx prettier . --write
+   ```
 
 ---
 
@@ -85,4 +126,4 @@ Keyboards are notoriously difficult to make responsive. GridBoard solves this by
 
 This project is distributed under the **GNU General Public License v3.0 (GPLv3)**. See `LICENSE` for more information.
 
-📬 **Contact:** BenGephardt - [https://github.com/BenGephardt](https://github.com/BenGephardt)
+📬 **Contact:** BenGephardt — [https://github.com/BenGephardt](https://github.com/BenGephardt)
